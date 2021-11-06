@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Weather</string>
+    
+    <string name="frg_main__label">Main Fragment</string>
+    <string name="frg_setting__label">Setting</string>
+    <string name="frg_manage_cities__label">City</string>
+</resources>

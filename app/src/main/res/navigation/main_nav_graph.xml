@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@id/mainFragment"
+        android:name="com.sdimosikvip.weather.screens.main.MainFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/main_fragment">
+        <action
+            android:id="@+id/action_mainFragment_to_manageCitiesFragment"
+            app:destination="@id/manageCitiesFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/manageCitiesFragment"
+        android:name="com.sdimosikvip.weather.screens.manage_cities.ManageCitiesFragment"
+        android:label="fragment_manage_cities"
+        tools:layout="@layout/manage_cities_fragment" />
+
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.sdimosikvip.weather.screens.setting.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/setting_fragment" />
+
+</navigation>
