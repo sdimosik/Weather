@@ -34,14 +34,6 @@ class MainFragment : Fragment(R.layout.main_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.btnCity.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_manageCitiesFragment)
-        }
-
-        binding.btnSetting.setOnClickListener {
-            findNavController().navigate(R.id.action_mainFragment_to_settingFragment)
-        }
     }
 
     private fun makeBundle(): Bundle = bundleOf(MAIN_KEY to "")
