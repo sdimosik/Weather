@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingStart="0dp"
+    android:paddingEnd="24dp">
+
+    <TextView
+        android:id="@+id/item_hourly__time"
+        style="@style/TextView.H3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Hour" />
+
+    <ImageView
+        android:id="@+id/item_hourly__img"
+        android:layout_width="32dp"
+        android:layout_height="32dp" />
+
+    <TextView
+        android:id="@+id/item_hourly__temp"
+        style="@style/TextView.H3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Hour" />
+
+</LinearLayout>
