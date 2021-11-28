@@ -1,25 +1,19 @@
 package com.sdimosikvip.weather
 
 import android.app.Application
-import android.content.Context
-import com.sdimosikvip.weather.di.AppComponent
-import com.sdimosikvip.weather.di.DaggerAppComponent
+import com.jakewharton.threetenabp.AndroidThreeTen
+import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
 
+@HiltAndroidApp
 class MainApp : Application() {
-
-    lateinit var appComponent: AppComponent
 
     override fun onCreate() {
         super.onCreate()
-        appComponent = DaggerAppComponent
-            .builder()
-            .application(this)
-            .build()
+        AndroidThreeTen.init(this)
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
     }
 }
-
-val Context.appComponent: AppComponent
-    get() = when (this) {
-        is MainApp -> appComponent
-        else -> this.applicationContext.appComponent
-    }
