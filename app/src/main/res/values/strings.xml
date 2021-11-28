@@ -4,4 +4,20 @@
     <string name="frg_main__label">Main Fragment</string>
     <string name="frg_setting__label">Setting</string>
     <string name="frg_manage_cities__label">City</string>
+    <string name="feels_like">Feels like</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind">Wind</string>
+    <string name="clouds">Clouds</string>
+    <string name="visibility">Visibility</string>
+    <string name="air_pressure">Air pressure</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="description_back">description_back</string>
+    <string name="city">City</string>
+
+    <string name="celsius">°C</string>
+    <string name="percent">%</string>
+    <string name="meters_to_seconds">\" m/s\"</string>
+    <string name="kilometer">\" km\"</string>
+    <string name="hectopascal">\" hPha\"</string>
 </resources>

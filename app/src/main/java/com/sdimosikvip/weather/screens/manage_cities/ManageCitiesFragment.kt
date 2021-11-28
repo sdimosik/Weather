@@ -11,16 +11,13 @@ import com.sdimosikvip.weather.R
 import com.sdimosikvip.weather.databinding.ManageCitiesFragmentBinding
 import com.sdimosikvip.weather.utils.autoCleared
 import dagger.Lazy
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 class ManageCitiesFragment : Fragment(R.layout.manage_cities_fragment) {
 
     private var binding by autoCleared<ManageCitiesFragmentBinding>()
-
-    @Inject
-    lateinit var viewModelFactory: Lazy<ViewModelProvider.Factory>
-
-    val viewModel: ManageCitiesViewModel by viewModels { viewModelFactory.get() }
 
     override fun onCreateView(
         inflater: LayoutInflater,

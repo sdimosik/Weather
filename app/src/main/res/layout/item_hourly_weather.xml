@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/item_hourly__time"
-        style="@style/TextView.H3"
+        style="@style/TextView.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Hour" />
@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/item_hourly__temp"
-        style="@style/TextView.H3"
+        style="@style/TextView.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="Hour" />

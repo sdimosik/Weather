@@ -17,11 +17,6 @@ class SettingFragment : Fragment(R.layout.setting_fragment) {
 
     private var binding by autoCleared<SettingFragmentBinding>()
 
-    @Inject
-    lateinit var viewModelFactory: Lazy<ViewModelProvider.Factory>
-
-    val viewModel: SettingViewModel by viewModels { viewModelFactory.get() }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

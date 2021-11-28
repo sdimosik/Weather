@@ -4,6 +4,7 @@ import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.todkars.shimmer.ShimmerRecyclerView
 
+
 fun <VH : RecyclerView.ViewHolder> ShimmerRecyclerView.setup(
     adapter: RecyclerView.Adapter<VH>,
     @LayoutRes layoutId: Int
