@@ -1,6 +1,6 @@
 package com.sdimosikvip.weather.api
 
-import com.sdimosikvip.weather.model.entity.WeatherCoordinatesItem
+import com.sdimosikvip.weather.model.entity.WeatherLocationInfo
 import com.sdimosikvip.weather.model.entity.WeatherOneCall
 import retrofit2.Response
 import retrofit2.http.GET
@@ -15,7 +15,15 @@ interface WeatherService {
     ): Response<WeatherOneCall>
 
     @GET("geo/1.0/direct")
-    suspend fun getCoordinates(
-        @Query("q") location: String
-    ): Response<List<WeatherCoordinatesItem>>
+    suspend fun getCityInfoByCityName(
+        @Query("q") location: String,
+        @Query("limit") limit: Int = 1
+    ): Response<List<WeatherLocationInfo>>
+
+    @GET("geo/1.0/reverse")
+    suspend fun getCityInfoByCoordinates(
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
+        @Query("limit") limit: Int = 1
+    ): Response<List<WeatherLocationInfo>>
 }

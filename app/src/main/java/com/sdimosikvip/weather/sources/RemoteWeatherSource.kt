@@ -10,6 +10,9 @@ class RemoteWeatherSource @Inject constructor(
     suspend fun fetchWeather(lat: Double, lon: Double) =
         getResult { weatherService.getWeatherOneCall(lat, lon) }
 
-    suspend fun fetchCoordinates(location: String) =
-        getResult { weatherService.getCoordinates(location) }
+    suspend fun fetchCityInfoByName(locationName: String) =
+        getResult { weatherService.getCityInfoByCityName(locationName) }
+
+    suspend fun fetchCityInfoByCoordinates(lat: Double, lon: Double) =
+        getResult { weatherService.getCityInfoByCoordinates(lat, lon) }
 }

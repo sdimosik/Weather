@@ -8,8 +8,6 @@ import com.sdimosikvip.weather.model.parts_of_model.*
 @Entity(tableName = WeatherOneCall.TABLE_NAME)
 data class WeatherOneCall(
 
-    @SerializedName("alerts")
-    val alerts: List<Alert>,
     @SerializedName("current")
     val current: Current,
     @SerializedName("daily")
@@ -20,8 +18,6 @@ data class WeatherOneCall(
     val lat: Double,
     @SerializedName("lon")
     val lon: Double,
-    @SerializedName("minutely")
-    val minutely: List<Minutely>,
     @SerializedName("timezone")
     val timezone: String,
     @SerializedName("timezone_offset")
@@ -29,7 +25,7 @@ data class WeatherOneCall(
 ) {
     @field:SerializedName("unique_id")
     @PrimaryKey(autoGenerate = true)
-    var uId: Int = 0;
+    var uId: Long = 0
 
     companion object {
         const val TABLE_NAME = "weather_table"
