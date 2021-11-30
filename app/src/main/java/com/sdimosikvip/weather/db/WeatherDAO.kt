@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.sdimosikvip.weather.model.entity.WeatherCoordinatesItem
+import com.sdimosikvip.weather.model.entity.WeatherLocationInfo
 import com.sdimosikvip.weather.model.entity.WeatherOneCall
 
 @Dao
@@ -23,14 +23,14 @@ interface WeatherDAO {
     suspend fun deleteAllWeather()
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCoordinatesItem(coordinatesItem: WeatherCoordinatesItem)
+    suspend fun insertCoordinatesItem(locationInfo: WeatherLocationInfo)
 
-    @Query("SELECT * FROM ${WeatherCoordinatesItem.TABLE_NAME} ORDER BY uId DESC LIMIT 1")
-    suspend fun getCoordinatesItem(): WeatherCoordinatesItem
+    @Query("SELECT * FROM ${WeatherLocationInfo.TABLE_NAME} ORDER BY uId DESC LIMIT 1")
+    suspend fun getCoordinatesItem(): WeatherLocationInfo
 
-    @Query("SELECT * FROM ${WeatherCoordinatesItem.TABLE_NAME} ORDER BY uId")
-    suspend fun getAllCoordinatesItem(): List<WeatherCoordinatesItem>
+    @Query("SELECT * FROM ${WeatherLocationInfo.TABLE_NAME} ORDER BY uId")
+    suspend fun getAllCoordinatesItem(): List<WeatherLocationInfo>
 
-    @Query("DELETE FROM ${WeatherCoordinatesItem.TABLE_NAME}")
+    @Query("DELETE FROM ${WeatherLocationInfo.TABLE_NAME}")
     suspend fun deleteAllCoordinatesItem()
 }

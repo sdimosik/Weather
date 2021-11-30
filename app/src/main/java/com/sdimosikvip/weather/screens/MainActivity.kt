@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var animDrawable: AnimationDrawable
+    private var isAttached = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,10 +40,13 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        val navHost = findNavController(R.id.navHost)
-        val navInflater = navHost.navInflater
-        val mainGraph = navInflater.inflate(R.navigation.main_nav_graph)
-        navHost.graph = mainGraph
+        if (!isAttached) {
+            val navHost = findNavController(R.id.navHost)
+            val navInflater = navHost.navInflater
+            val mainGraph = navInflater.inflate(R.navigation.main_nav_graph)
+            navHost.graph = mainGraph
+            isAttached = true
+        }
     }
 
     override fun onResume() {

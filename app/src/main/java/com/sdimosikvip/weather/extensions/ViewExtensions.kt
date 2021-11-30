@@ -11,5 +11,6 @@ fun <VH : RecyclerView.ViewHolder> ShimmerRecyclerView.setup(
 ) {
     this.adapter = adapter
     setItemViewType { _, _ -> layoutId }
-    showShimmer()
 }
+
+fun <E : Enum<E>> Enum<E>.getValue(): String = toString().lowercase()

@@ -31,6 +31,13 @@ class TransformUtils {
             return sdf.format(zdt)
         }
 
+        @SuppressLint("SimpleDateFormat")
+        fun formatMonthDayWeek(timestamp: Long, zone: String): String {
+            val sdf = DateTimeFormatter.ofPattern("MMM dd EE")
+            val zdt = ZonedDateTime.ofInstant(Instant.ofEpochSecond(timestamp), ZoneId.of(zone))
+            return sdf.format(zdt)
+        }
+
         fun convertKelvinToCelsius(kelvin: Double): Double {
             val df = DecimalFormat("#.#")
             df.roundingMode = RoundingMode.HALF_UP

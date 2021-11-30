@@ -12,23 +12,40 @@
         tools:layout="@layout/main_fragment">
         <action
             android:id="@+id/action_mainFragment_to_manageCitiesFragment"
-            app:destination="@id/manageCitiesFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_settingFragment"
-            app:destination="@id/settingFragment" />
+            app:destination="@id/manageCitiesFragment"
+            app:enterAnim="@anim/open_fragment_slide_right"
+            app:exitAnim="@anim/close_fragment_slide_left"
+            app:popEnterAnim="@anim/open_fragment_slide_left"
+            app:popExitAnim="@anim/close_fragment_slide_right" />
     </fragment>
 
     <fragment
         android:id="@+id/manageCitiesFragment"
         android:name="com.sdimosikvip.weather.screens.manage_cities.ManageCitiesFragment"
         android:label="fragment_manage_cities"
-        tools:layout="@layout/manage_cities_fragment" />
+        tools:layout="@layout/manage_cities_fragment">
+        <action
+            android:id="@+id/action_manageCitiesFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/open_fragment_slide_left"
+            app:exitAnim="@anim/close_fragment_slide_right"
+            app:popEnterAnim="@anim/open_fragment_slide_right"
+            app:popExitAnim="@anim/close_fragment_slide_left" />
+        <action
+            android:id="@+id/action_manageCitiesFragment_to_searchBottomSheetDialogFragment"
+            app:destination="@id/searchBottomSheetDialogFragment"
+            app:enterAnim="@anim/open_fragment_slide_up"
+            app:exitAnim="@anim/close_fragment_slide_down"
+            app:popEnterAnim="@anim/open_fragment_slide_down"
+            app:popExitAnim="@anim/close_fragment_slide_up" />
+    </fragment>
 
 
-    <fragment
-        android:id="@+id/settingFragment"
-        android:name="com.sdimosikvip.weather.screens.setting.SettingFragment"
-        android:label="fragment_setting"
-        tools:layout="@layout/setting_fragment" />
+    <dialog
+        android:id="@+id/searchBottomSheetDialogFragment"
+        android:name="com.sdimosikvip.weather.screens.search.SearchBottomSheetDialogFragment"
+        android:label="search_bottom_dialog_fragment"
+        tools:layout="@layout/search_bottom_sheet_dialog_fragment">
+    </dialog>
 
 </navigation>

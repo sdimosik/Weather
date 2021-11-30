@@ -2,6 +2,8 @@ package com.sdimosikvip.weather.mapper
 
 import com.sdimosikvip.weather.model.domain.DayWeather
 import com.sdimosikvip.weather.model.domain.HourWeather
+import com.sdimosikvip.weather.model.domain.LocationWeather
+import com.sdimosikvip.weather.model.entity.WeatherLocationInfo
 import com.sdimosikvip.weather.model.parts_of_model.Daily
 import com.sdimosikvip.weather.model.parts_of_model.Hourly
 
@@ -36,5 +38,40 @@ internal fun Daily.toDayWeather(timezone: String): DayWeather {
 internal fun List<Daily>.toDayWeatherList(timezone: String): List<DayWeather> {
     return this.map {
         it.toDayWeather(timezone)
+    }
+}
+
+internal fun WeatherLocationInfo.toLocationWeather(): LocationWeather {
+    return LocationWeather(
+        id = this.uId,
+        name = this.name,
+        lat = this.lat,
+        lon = this.lon,
+        country = this.country,
+        localNames = this.localNames,
+        state = this.state
+    )
+}
+
+internal fun List<WeatherLocationInfo>.toLocationWeatherList(): List<LocationWeather> {
+    return this.map {
+        it.toLocationWeather()
+    }
+}
+
+internal fun LocationWeather.toWeatherLocationInfo(): WeatherLocationInfo {
+    return WeatherLocationInfo(
+        name = this.name,
+        lat = this.lat,
+        lon = this.lon,
+        country = this.country,
+        localNames = this.localNames,
+        state = this.state
+    )
+}
+
+internal fun List<LocationWeather>.toWeatherLocationInfoList(): List<WeatherLocationInfo> {
+    return this.map {
+        it.toWeatherLocationInfo()
     }
 }

@@ -6,16 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.sdimosikvip.weather.R
 import com.sdimosikvip.weather.api.ResultResponse
-import com.sdimosikvip.weather.base.BaseFragment
+import com.sdimosikvip.weather.base.ToolbarFragment
 import com.sdimosikvip.weather.databinding.MainFragmentBinding
 import com.sdimosikvip.weather.extensions.setup
 import com.sdimosikvip.weather.mapper.toDayWeatherList
 import com.sdimosikvip.weather.mapper.toHourWeatherList
+import com.sdimosikvip.weather.model.entity.WeatherLocationInfo
 import com.sdimosikvip.weather.screens.main.adapter.DailyAdapter
 import com.sdimosikvip.weather.screens.main.adapter.HourlyAdapter
 import com.sdimosikvip.weather.utils.TransformUtils
@@ -23,17 +24,37 @@ import com.sdimosikvip.weather.utils.TransformUtils.Companion.formatWindDef
 import com.sdimosikvip.weather.utils.autoCleared
 import com.sdimosikvip.weather.utils.getColorHelper
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
-class MainFragment : BaseFragment(R.layout.main_fragment) {
+class MainFragment : ToolbarFragment(
+    titleResource = R.string.city,
+    contentLayoutId = R.layout.main_fragment,
+    type = ToolbarType.CITY
+) {
 
     companion object {
-        const val MAIN_KEY = "com.sdimosikvip.weather.screens.main.SERVICE_TITLE_KEY"
+        const val MAIN_RESULT_KEY = "com.sdimosikvip.weather.screens.main.MAIN_RESULT_KEY"
+
+        fun makeBundle(locationWeather: WeatherLocationInfo): Bundle =
+            bundleOf(MAIN_RESULT_KEY to locationWeather)
+    }
+
+    private fun setupFromArguments() {
+
+        if (arguments != null) {
+            requireArguments().getParcelable<WeatherLocationInfo>(MAIN_RESULT_KEY)?.let { locationWeather ->
+                Timber.tag("mydebug").d("return Args")
+                viewModel.fetchNewLocation(ResultResponse.success(locationWeather))
+            }
+        }
     }
 
     override var binding by autoCleared<MainFragmentBinding>()
 
-    private val viewModel: MainViewModel by activityViewModels()
+    override fun getToolbarLayout(): View = binding.frgMainLayoutToolbar.root
+
+    private val viewModel: MainViewModel by viewModels()
 
     private lateinit var hourlyAdapter: HourlyAdapter
     private lateinit var dailyAdapter: DailyAdapter
@@ -61,6 +82,7 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
 
         setupViews()
         subscribe()
+        setupFromArguments()
     }
 
     override fun onStop() {
@@ -80,7 +102,8 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
         )
 
         binding.swipeContainer.setOnRefreshListener {
-            viewModel.fetchWeather()
+            Timber.tag("mydebug").d("Refresh container")
+            viewModel.fetchLocation()
         }
 
         binding.frgMainLayoutToolbar.includeToolbarCityButton.setOnClickListener {
@@ -90,10 +113,37 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
 
     private fun subscribe() {
 
+        viewModel.location.observe(viewLifecycleOwner) {
+            Timber.tag("mydebug").d("Location observe. Status: ${it.status}")
+            when (it.status) {
+
+                ResultResponse.Status.LOADING -> {
+                    binding.swipeContainer.isRefreshing = true
+                }
+
+                ResultResponse.Status.SUCCESS -> {
+                    with(it.data!!) {
+                        binding.frgMainLayoutToolbar.includeToolbarTitle.text = name
+                        viewModel.fetchWeather(this)
+                    }
+                    binding.swipeContainer.isRefreshing = false
+                }
+
+                ResultResponse.Status.ERROR -> {
+                    showError(binding.root, "Some problems")
+                    binding.swipeContainer.isRefreshing = false
+                }
+
+            }
+        }
+
         viewModel.weather.observe(viewLifecycleOwner) { resultResponse ->
+            Timber.tag("mydebug").d("Weather observe. Status: ${resultResponse.status}")
             when (resultResponse.status) {
 
                 ResultResponse.Status.LOADING -> {
+                    binding.frgMainHourlyTempRv.showShimmer()
+                    binding.frgMainDailyTempRv.showShimmer()
                     binding.swipeContainer.isRefreshing = true
                 }
 
@@ -108,6 +158,8 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
                             frgMainCurrentTempType.text = TransformUtils.celsius
                             frgMainCurrentTempDescription.text =
                                 current.weatherInfo[0].description
+                            frgMainCurrentData.text =
+                                TransformUtils.formatMonthDayWeek(current.dt, timezone)
 
                             frgMainFeelsLike.text =
                                 TransformUtils.formatFeelsLikeDef(current.feelsLike)
@@ -128,12 +180,15 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
                                 TransformUtils.formatHoursAndMinutes(current.sunset, timezone)
                         }
                     }
+                    binding.swipeContainer.visibility = View.VISIBLE
                     binding.frgMainHourlyTempRv.hideShimmer()
                     binding.frgMainDailyTempRv.hideShimmer()
                     binding.swipeContainer.isRefreshing = false
                 }
 
                 ResultResponse.Status.ERROR -> {
+                    showError(binding.root, "Network error")
+                    binding.swipeContainer.visibility = View.GONE
                     binding.frgMainHourlyTempRv.hideShimmer()
                     binding.frgMainDailyTempRv.hideShimmer()
                     binding.swipeContainer.isRefreshing = false
@@ -145,7 +200,5 @@ class MainFragment : BaseFragment(R.layout.main_fragment) {
             binding.nestedScrollView.scrollY = scrollState
         }
     }
-
-    private fun makeBundle(): Bundle = bundleOf(MAIN_KEY to "")
 
 }

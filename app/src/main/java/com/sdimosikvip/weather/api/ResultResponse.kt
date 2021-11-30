@@ -4,7 +4,7 @@ data class ResultResponse<out T>(
     val status: Status,
     val data: T?,
     val message: String?
-) {
+){
 
     enum class Status {
         SUCCESS,

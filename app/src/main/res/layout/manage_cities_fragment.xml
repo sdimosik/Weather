@@ -1,13 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_secondary"
     tools:context=".screens.manage_cities.ManageCitiesFragment">
 
     <TextView
+        android:id="@+id/empty_cities_list"
+        style="@style/TextView.Medium.Black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="32dp"
+        android:text="@string/no_city_added"
+        android:visibility="gone"
+        app:drawableTopCompat="@drawable/ic_baseline_cloud_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/frg_manage_cities__label" />
+        android:orientation="vertical">
 
-</FrameLayout>
+        <include
+            android:id="@+id/frg_manage_cities__layout_toolbar"
+            layout="@layout/include_toolbar" />
+
+        <com.todkars.shimmer.ShimmerRecyclerView
+            android:id="@+id/list_picked_location_list_shimmer"
+            style="@style/Recycler.Vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            tools:listitem="@layout/item_location_weather" />
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:contentDescription="@string/add_new_city"
+        android:focusable="true"
+        android:src="@drawable/ic_baseline_location_city_black_24"
+        android:tintMode="@color/black"
+        app:borderWidth="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
