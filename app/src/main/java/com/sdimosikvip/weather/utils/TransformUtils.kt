@@ -1,6 +1,7 @@
 package com.sdimosikvip.weather.utils
 
 import android.annotation.SuppressLint
+import com.sdimosikvip.weather.utils.Extension.roundTo
 import org.threeten.bp.Instant
 import org.threeten.bp.ZoneId
 import org.threeten.bp.ZonedDateTime
@@ -39,15 +40,11 @@ class TransformUtils {
         }
 
         fun convertKelvinToCelsius(kelvin: Double): Double {
-            val df = DecimalFormat("#.#")
-            df.roundingMode = RoundingMode.HALF_UP
-            return df.format(kelvin.minus(273)).toDouble()
+            return (kelvin - 273.15).roundTo(1)
         }
 
         fun convertCelsiusToFahrenheit(celsius: Double): Double {
-            val df = DecimalFormat("#")
-            df.roundingMode = RoundingMode.HALF_UP
-            return df.format(celsius.times(1.8).plus(32)).toDouble()
+            return (celsius * 1.8 + 32.0).roundTo(1)
         }
 
         fun convertKmToM(km: Double) = km * 1000.0
